@@ -39,7 +39,7 @@ export default function PatientCard() {
       }),
   
       onSubmit: (values) => {
-        console.log('wwww')
+        //console.log('wwww')
         PostPatients(values).then(response => {
           
           if(response.done){ 

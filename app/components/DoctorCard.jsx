@@ -11,7 +11,7 @@ export default function DoctorCard() {
   const {data, error, isLoading} = useSWR(`${url}`,fetcher)
 
   if (error) return <div>Failed to load... No Doctor ID Found</div>
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <div>Loading...!</div>
   
   //============== Manage Error ==================
   let errorFlag = false

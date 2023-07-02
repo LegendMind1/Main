@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
         
       <main className={poppins.className}>
        {/* <div className='bg-gradient-to-t from-[#59ab7a] to-[#000000] h-screen'> */}
-       <div className='bg-[url("/images/bg2.jpg")] bg-cover h-screen'>
+       <div className='bg-[url("/images/bg2.jpg")] bg-fixed bg-cover'>
         {/*--Container div Started -- */}
 
         

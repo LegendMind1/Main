@@ -1,7 +1,9 @@
-export default async function ProfileLayout({ children }) {
+export default function ProfileLayout({ children }) {
     return (
         <>
+        
             {children}
+        
         </>
     )
 }
