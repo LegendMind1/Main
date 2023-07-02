@@ -204,6 +204,8 @@ export async function GetPatient(pid){
 }
 */
 
+
+//======= Fetching With Manual Options, Needs an IIFE Function To Trigger====
 export async function GetPatient(pid){
 
   const url = `http://192.168.18.165:1337/api/patients?[filters][userid][$eq]=${pid}`;
@@ -224,17 +226,43 @@ export async function GetPatient(pid){
     throw err;
   }
 }
-    
+//==================================================
 
-export async function GetDoctor(pid){
-  const res = await fetch (`http://192.168.18.165:1337/api/doctors/:${pid}`, { 
-    next: { revalidate: 0 },
-    method: 'GET'  // Sending a GET request
-  });
-  const pat = await res.json();
-  //return pat.data.map(({attributes}) => attributes);
-  //console.log (pat.data)
 
-  return pat
-  
+
+
+export async function PostPatients(values){
+  const postData = {
+    patient_name: values.txtname,
+    patient_email: values.txtemail,
+    patient_age: values.txtage,
+    userid: values.txtuserid
+  };
+  //const postNow = JSON.stringify({data: postData})
+  try{
+      const response = await fetch('http://127.0.0.1:1337/api/patients', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          //'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({data: postData}),
+        //body: postNow,
+      });
+      const postedData = await response.json();
+      if (response.ok) {
+        console.log('Data posted successfully!');
+        console.log (postedData);
+        return Promise.resolve({done: true, username: postedData.data[0].attributes.patient_name})
+      } else {
+        console.log('Failed to post data.');
+        console.log (postedData);
+        return Promise.resolve({done: false})
+
+      }
+    } // Try Block End 
+    catch (error) {
+      console.log('Error:', error);
+    }
+
 }
