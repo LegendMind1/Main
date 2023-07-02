@@ -1,7 +1,7 @@
 'use client'
 import Cookies from 'js-cookie';
 import { GetPatient, PostPatients } from '../components/Middlewares';
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 
 
@@ -33,13 +33,13 @@ export default function PatientCard() {
       },
       //----------Validation ------
       validationSchema: Yup.object({
-        patient_age: Yup.string()
+        txtage: Yup.string()
           .required ('Age is a required field'),
       
       }),
   
       onSubmit: (values) => {
-        alert('wwww')
+        console.log('wwww')
         PostPatients(values).then(response => {
           
           if(response.done){ 
@@ -57,10 +57,7 @@ export default function PatientCard() {
             console.log(`Lugger Message: ${response.dberror}`)
             setTimeout(()=>hideError('errorDiv'), 5000)  
     
-          } 
-  
-  
-        })
+          } })
         
       }
   
@@ -75,12 +72,12 @@ export default function PatientCard() {
   return (
     <>
     <section className='flex justify-center'>
-    <div className='w-1/2 max-md:w-4/5 mb-20 bg-cyan-800 rounded-3xl text-white h-auto justify-center items-center flex p-10'>
+    <div className='w-1/2 max-md:w-4/5 mb-10 bg-cyan-800 rounded-3xl text-white h-auto justify-center items-center flex pt-10 pr-10 pl-10 pb-2'>
         <div className='flex flex-col w-full'>
-          <div className='flex'>Patient Card</div>
-          <div>User ID is: {Cookies.get('userid')}</div>
+          <div className='flex bg-red-800 w-full justify-center text-lg rounded-full p-2'>Patient Card</div>
+          <div className='flex justify-end'>User ID is: {Cookies.get('userid')}</div>
           <div id='dd'></div>
-          <div className='w-full'>
+          <div className='w-full mt-6'>
             <form className='text-red-700 w-full' onSubmit={formik.handleSubmit}>
               
               <div className='flex'>
@@ -93,7 +90,7 @@ export default function PatientCard() {
                   />
                 </div>
                 <div className='m-2 flex flex-col w-1/2'>
-                  <label for='txtage' className='p-1 px-2 text-black bg-yellow-500 w-24'>Age</label>
+                  <label for='txtage' className='p-1 px-2 text-black bg-yellow-500 w-24'>Age*</label>
                   <input type='text' id='txtage' className='p-1 w-full' 
                   value={formik.values.txtage}
                   onChange={formik.handleChange}
@@ -117,13 +114,14 @@ export default function PatientCard() {
                 onBlur={formik.handleBlur}
                 />
               </div>
-              <div>
-                <button type='submit'>Make Profile</button>
+              <div className='mt-6'>
+                <button type='submit' className='bg-green-700 inline-block px-6 py-2.5 text-green-300 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:text-white hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full'>
+                  Make Profile</button>
               </div>
               
             </form>
-            <div id='errorDiv' name='errorDiv' className='bg-red-800 text-red-100 p-2 px-4 mt-2 rounded-full invisible'></div>
-            <div id='noerrorDiv' name='noerrorDiv' className='bg-green-800 text-red-100 px-4 mt-2 p-2 rounded-full invisible'></div>
+            <div id='errorDiv' name='errorDiv' className='bg-red-800 text-red-100 p-2 px-4 mt-1 rounded-full invisible'></div>
+            <div id='noerrorDiv' name='noerrorDiv' className='bg-green-800 text-red-100 px-4 mt-1 p-2 rounded-full invisible'></div>
           </div>
         </div>
     </div>
