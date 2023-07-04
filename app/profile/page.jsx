@@ -7,6 +7,7 @@ import DoctorProfile from '../components/DoctorProfile'
 export default function Profile () {
     return (
     <>
+    <div>
         <header>
             <div className='font-medium flex items-center text-lg m-0 max-md:rounded-b-[0px] rounded-b-[70px] bg-[#0b2c1f] bg-opacity-95 drop-shadow-lg max-md:h-[9vh]'>
               <Mainbar />
@@ -16,7 +17,7 @@ export default function Profile () {
         {
             Cookies.get('usertype') === 'patient' ? <PatientProfile /> : <DoctorProfile />
         }
-
+</div>
     </>
     )
 }

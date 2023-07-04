@@ -19,7 +19,7 @@ export default function DoctorProfile() {
             />
         </div>
     </div>
-    <DoctorCard />
+    
     </>
   )
 }

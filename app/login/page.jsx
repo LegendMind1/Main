@@ -91,14 +91,14 @@ export default function Login () {
             }
           /*-----------------------------------------------*/
 
-          setTimeout(()=>hideError('noerrorDiv'), 5000) 
+          //setTimeout(()=>hideError('noerrorDiv'), 5000) 
         } 
         else {
           const errorDiv = document.getElementById('errorDiv');
           errorDiv.style.visibility='visible'
           errorDiv.innerText = `${response.dberror}`
           console.log(`Lugger Message: ${response.dberror}`)
-          setTimeout(()=>hideError('errorDiv'), 5000)  
+          //setTimeout(()=>hideError('errorDiv'), 5000)  
   
         } 
 

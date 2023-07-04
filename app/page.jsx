@@ -1,4 +1,5 @@
 'use client'
+import { useEffect } from 'react';
 import Mainbar from './components/Mainbar'
 import Cookies from 'js-cookie';
 
@@ -19,7 +20,13 @@ export default function Home() {
       </div>
     </div>
     <div className='flex items-center justify-center flex-wrap whitespace-normal h-1/2'>
-      <div id='abc' name='abc' className='p-2 px-4 bg-red-800 text-red-100 rounded-full mt-4 flex justify-center items-center w-1/2 max-md:w-[85%] flex-wrap break-words content-center'>{Cookies.get('authtoken') ? 'We have recogized you ' + Cookies.get('username') + ' as ' + Cookies.get('usertype')  : 'You are logged out! Please Sign in first.'}</div>
+      <div id='abc' name='abc' className='p-2 px-4 bg-red-800 text-red-100 rounded-full mt-4 flex justify-center items-center w-1/2 max-md:w-[85%] flex-wrap break-words content-center'>
+        {
+          useEffect(() => {
+            document.getElementById('abc').innerText = Cookies.get('authtoken') ? 'We have recogized you ' + Cookies.get('username') + ' as ' + Cookies.get('usertype')  : 'You are logged out! Please Sign in first.'
+          },[Cookies.get('authtoken')])
+        }
+      </div>
     </div>
     </div>
     </>
