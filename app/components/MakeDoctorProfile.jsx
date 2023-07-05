@@ -2,12 +2,12 @@
 import Cookies from "js-cookie"
 import PatientCard from "./PatientCard"
 import Image from "next/image"
-import { GetPatient, PostPatients } from '../components/Middlewares';
+import { GetPatient, PostPatients } from './Middlewares';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 
-export default function PatientProfile() {
+export default function MakeDoctorProfile() {
   
     const formik = useFormik({
         initialValues: {

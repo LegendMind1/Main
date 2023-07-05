@@ -37,7 +37,7 @@ export async function LoginUser(userInfo) {
     
   };
   try{
-    let response = await fetch('http://192.168.18.165:1337/api/auth/local', {
+    let response = await fetch('http://127.0.0.1:1337/api/auth/local', {
       method: 'POST',
       headers: {
         //'Accept': 'application/json',
@@ -253,7 +253,7 @@ export async function PostPatients(values){
       if (response.ok) {
         console.log('Data posted successfully!');
         console.log (postedData);
-        return Promise.resolve({done: true, username: postedData.data[0].attributes.patient_name})
+        return Promise.resolve({done: true, username: postedData.data.attributes.patient_name})
       } else {
         console.log('Failed to post data.');
         console.log (postedData);

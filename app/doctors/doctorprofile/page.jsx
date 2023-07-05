@@ -1,10 +1,10 @@
 'use client'
 import Cookies from 'js-cookie'
-import Mainbar from '../components/Mainbar'
-import PatientProfile from '../components/PatientProfile'
-import DoctorProfile from '../components/DoctorProfile'
+import Mainbar from '../../components/Mainbar'
+import PatientProfile from '../../components/MakePatientProfile'
+import DoctorProfile from '../../components/MakeDoctorProfile'
 
-export default function Profile () {
+export default function DoctorProfile () {
     return (
     <>
     <div>
@@ -14,9 +14,7 @@ export default function Profile () {
             </div>  
         </header>
 
-        {
-            Cookies.get('usertype') === 'patient' ? <PatientProfile /> : <DoctorProfile />
-        }
+        <MakeDoctorProfile />
 </div>
     </>
     )

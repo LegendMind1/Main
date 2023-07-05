@@ -2,10 +2,19 @@
 import { useEffect } from 'react';
 import Mainbar from './components/Mainbar'
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   
-
+  const router = useRouter();
+  if(Cookies.get('usertype') == 'patient' )
+  {
+    router.push('/patients/patienthome')
+  }
+  else if(Cookies.get('usertype') == 'doctor')
+  {
+    router.push('/doctors/doctorhome')
+  }
    return (
     <>
     <div className='h-screen'>
