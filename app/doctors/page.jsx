@@ -1,21 +1,19 @@
 'use client'
 import Cookies from 'js-cookie'
-import MakePatientProfile from '@/app/components/MakePatientProfile'
 import { useRouter } from 'next/navigation';
 
-export default function PatientProfile () {
-    const router = useRouter();
+export default function DoctorHome () {
+  const router = useRouter();
 
     if (Cookies.get('usertype') != undefined) {
     return (
         <>
             <div>
-                <MakePatientProfile />
+              Home Page of Doctor
             </div>
         </>
     )}
     else {
         router.push('/')
     }
-
 }

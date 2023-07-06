@@ -2,18 +2,20 @@
 import Cookies from "js-cookie"
 import PatientCard from "./PatientCard"
 import Image from "next/image"
-import { GetPatient, PostPatients } from './Middlewares';
+import { PostDoctors } from './Middlewares';
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useRouter } from 'next/navigation';
 
 
 export default function MakeDoctorProfile() {
-  
+  const router = useRouter();
+
     const formik = useFormik({
         initialValues: {
           
           txtuserid: Cookies.get('userid'),
-          txtage: '',
+          //txtage: '',
           txtname: Cookies.get('username'),
           txtemail: Cookies.get('email'),
         },
@@ -26,7 +28,7 @@ export default function MakeDoctorProfile() {
     
         onSubmit: (values) => {
           //console.log('wwww')
-          PostPatients(values).then(response => {
+          PostDoctors(values).then(response => {
             
             if(response.done){ 
               //router.push(`/`)
@@ -59,7 +61,7 @@ export default function MakeDoctorProfile() {
         <>
         <div className="flex items-center justify-center text-2xl mt-3 flex-col">
             <div className="bg-red-800 rounded-full text-blue-100 p-4">
-                Patient {Cookies.get('username')} Profile
+                Doctor {Cookies.get('username')} Profile
             </div>
             <div>
                 <Image
@@ -75,8 +77,8 @@ export default function MakeDoctorProfile() {
         <section className='flex justify-center'>
             <div className='w-1/2 max-md:w-4/5 mb-10 bg-cyan-800 rounded-3xl text-white h-auto justify-center items-center flex pt-10 pr-10 pl-10 pb-2'>
                 <div className='flex flex-col w-full'>
-                <div className='flex bg-red-800 w-full justify-center text-lg rounded-full p-2'>Patient Card</div>
-                <div className='flex justify-end'>User ID is: {Cookies.get('userid')}</div>
+                <div className='flex bg-red-800 w-full justify-center text-lg rounded-full p-2'>Get Your Doctor E-ID Card</div>
+                <div className='flex justify-end'>Your E-Reg. ID is: {Cookies.get('userid')}</div>
                 <div id='dd'></div>
                 <div className='w-full mt-6'>
                     <form className='text-red-700 w-full' onSubmit={formik.handleSubmit}>
@@ -117,7 +119,7 @@ export default function MakeDoctorProfile() {
                     </div>
                     <div className='mt-6'>
                         <button type='submit' className='bg-green-700 inline-block px-6 py-2.5 text-green-300 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:text-white hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full'>
-                        Make Profile</button>
+                        Issue My Card</button>
                     </div>
                     
                     </form>

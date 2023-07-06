@@ -1,5 +1,4 @@
 import './globals.css'
-
 import { Poppins } from 'next/font/google'
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['500', '700'] })
@@ -11,24 +10,19 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
-  
+
   return (
     <html lang="en">
       <body>
-        
       <main className={poppins.className}>
        {/* <div className='bg-gradient-to-t from-[#59ab7a] to-[#000000] h-screen'> */}
        <div className='bg-[url("/images/bg2.jpg")] bg-fixed bg-cover'>
         {/*--Container div Started -- */}
-
         
         {children}
 
       </div> {/*--Container div Ended -- */}
     </main>
-        
-      
-        
       </body>
     </html>
   )

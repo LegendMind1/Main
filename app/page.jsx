@@ -5,24 +5,16 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  
   const router = useRouter();
-  if(Cookies.get('usertype') == 'patient' )
-  {
-    router.push('/patients/patienthome')
-  }
-  else if(Cookies.get('usertype') == 'doctor')
-  {
-    router.push('/doctors/doctorhome')
+  if (Cookies.get('authtoken') != undefined) {
+      Cookies.get('usertype') == 'patient' ? router.push ('/patients') : router.push ('/doctors')
   }
    return (
     <>
     <div className='h-screen'>
-        <header>
-            <div className='font-medium flex items-center text-lg m-0 max-md:rounded-b-[0px] rounded-b-[70px] bg-[#0b2c1f] bg-opacity-95 drop-shadow-lg max-md:h-[9vh]'>
-              <Mainbar />
-            </div>  
-        </header>
+        <div>
+          <Mainbar />
+        </div>
     <div className='flex items-center justify-center'>
       <div className='rounded-full mt-10 p-8 w-1/2 max-md:w-[80%] flex items-center justify-center text-4xl max-md:text-3xl bg-green-800 text-white'>
         Welcome to SHIS

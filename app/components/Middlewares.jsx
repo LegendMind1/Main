@@ -266,3 +266,41 @@ export async function PostPatients(values){
     }
 
 }
+
+
+
+export async function PostDoctors(values){
+  const postData = {
+    doctor_name: values.txtname,
+    doctor_email: values.txtemail,
+    //patient_age: values.txtage,
+    userid: values.txtuserid
+  };
+  //const postNow = JSON.stringify({data: postData})
+  try{
+      const response = await fetch('http://127.0.0.1:1337/api/doctors', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          //'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({data: postData}),
+        //body: postNow,
+      });
+      const postedData = await response.json();
+      if (response.ok) {
+        console.log('Data posted successfully!');
+        console.log (postedData);
+        return Promise.resolve({done: true, username: postedData.data.attributes.doctor_name})
+      } else {
+        console.log('Failed to post data.');
+        console.log (postedData);
+        return Promise.resolve({done: false})
+
+      }
+    } // Try Block End 
+    catch (error) {
+      console.log('Error:', error);
+    }
+
+}

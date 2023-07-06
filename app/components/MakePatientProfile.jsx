@@ -76,7 +76,7 @@ export default function MakePatientProfile() {
         <section className='flex justify-center'>
             <div className='w-1/2 max-md:w-4/5 mb-10 bg-cyan-800 rounded-3xl text-white h-auto justify-center items-center flex pt-10 pr-10 pl-10 pb-2'>
                 <div className='flex flex-col w-full'>
-                <div className='flex bg-red-800 w-full justify-center text-lg rounded-full p-2'>Get Your Patient ID Card</div>
+                <div className='flex bg-red-800 w-full justify-center text-lg rounded-full p-2'>Get Your Patient E-ID Card</div>
                 <div className='flex justify-end'>Your E-Reg. ID is: {Cookies.get('userid')}</div>
                 <div id='dd'></div>
                 <div className='w-full mt-6'>
