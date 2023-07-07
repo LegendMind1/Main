@@ -88,7 +88,7 @@ const Mainbar = () => {
                 
                 <div className='flex flex-row items-center max-md:text-[12px] hidden' id='divLogOut'>
                 <div>
-                    <Link href='/profile'>
+                    <Link href='/'>
                       <Image
                         alt="Logo"
                         className="cursor-pointer m-4 rounded-full"

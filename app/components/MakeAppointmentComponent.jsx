@@ -2,11 +2,11 @@
 import Cookies from "js-cookie"
 import PatientCard from "./PatientCard"
 import Image from "next/image"
-import { GetPatient, PostPatients } from './Middlewares';
+import { PostAppointment } from './Middlewares';
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //theme
 import "primereact/resources/themes/vela-green/theme.css";     
@@ -24,6 +24,68 @@ import { Dropdown } from 'primereact/dropdown';
 export default function MakeAppointmentComponent() {
     const router = useRouter();
 
+    const [useEffectTrigger, setUseEffectTrigger] = useState([false]);
+
+    useEffect (()=>{
+      (useEffectTrigger[0] == true) ? document.getElementById('successDiv').style.visibility='visible' :  document.getElementById('successDiv').style.visibility='hidden'
+    },[useEffectTrigger])
+
+    function tempCheck(){
+
+            let docName = handleDoctorList()
+            let strSymptoms = handleSymptoms ()
+            let aptDate = handleCalendar()  
+
+            let extraFields = {
+                    txtDesc: formik.values.txtDesc,
+                    docName: docName,
+                    strSymptoms: strSymptoms,
+                    aptDate: aptDate,
+                    aptStatus:'REQUESTED',    // Appointment status: REQUESTED | SCHEDULED | EXPIRED
+                    patientid: Cookies.get('userid'),
+                    doctorid: '1001'
+                }
+
+                console.log (extraFields)
+            
+    }
+
+      function handleCalendar () {
+        let dt;
+        dt = (String(formik.values.date) != 'undefined') ? String(formik.values.date) : ''
+        return ((dt !='') ? dt.slice(0,15) : '')
+      }
+
+    function handleSymptoms (){
+      
+      let strSymptoms = ''
+      try{
+            formik.values.slctSymptoms.forEach(
+              function (d) {
+                strSymptoms = strSymptoms + d.name + ', ' 
+              }
+            )
+            strSymptoms = strSymptoms.slice(0,-2)
+          }
+          catch {
+            strSymptoms = ''
+          }
+      return strSymptoms
+
+    }
+
+      function handleDoctorList(){
+        let docName = ''
+          try{
+            docName = formik.values.slctDoctor.name
+          }
+          catch{ 
+            docName = ''          
+          }
+          return docName
+        }
+    
+
     //========= Multiselect Symptoms Const======
 
     const [selectedSymptoms, setSelectedSymptoms] = useState(null);
@@ -32,19 +94,6 @@ export default function MakeAppointmentComponent() {
         { name: 'Headache', code: 'Headache' },
         { name: 'Cold', code: 'Cold' },
         { name: 'Heart Pepation', code: 'Heart Peptation' },
-        { name: 'Fever', code: 'Fever' },
-        { name: 'Headache', code: 'Headache' },
-        { name: 'Cold', code: 'Cold' },
-        { name: 'Heart Pepation', code: 'Heart Peptation' },
-        { name: 'Fever', code: 'Fever' },
-        { name: 'Headache', code: 'Headache' },
-        { name: 'Cold', code: 'Cold' },
-        { name: 'Heart Pepation', code: 'Heart Peptation' },
-        { name: 'Fever', code: 'Fever' },
-        { name: 'Headache', code: 'Headache' },
-        { name: 'Cold', code: 'Cold' },
-        { name: 'Heart Pepation', code: 'Heart Peptation' },
-        { name: 'Diarrhoea', code: 'Diarrhoea' }
     ];
 
 
@@ -69,11 +118,16 @@ export default function MakeAppointmentComponent() {
           initialValues: {
             
             txtDesc: '',
-            slctSymptoms:'',
+            strSymptoms:'',       //---can't use  as it is an object
+            strDoctorName: '',    //---can't use  as it is an object
+            aptdate: '',
+            ////////////////////////////////////////////////////////////////////
+            aptStatus:'',
+            patientid: '',
+            doctorid: ''
             
-            //txtname: Cookies.get('username'),
-            //txtemail: Cookies.get('email'),
           },
+
           //----------Validation ------
           validationSchema: Yup.object({
             txtDesc: Yup.string()
@@ -82,37 +136,59 @@ export default function MakeAppointmentComponent() {
           }),
       
           onSubmit: (values) => {
-
             //console.log('wwww')
-            PostPatients(values).then(response => {
+            let docName = handleDoctorList()
+            let strSymptoms = handleSymptoms ()
+            let aptDate = handleCalendar()  
+
+            let extraFields = {
+                    txtDesc: values.txtDesc,
+                    docName: docName,
+                    strSymptoms: strSymptoms,
+                    aptDate: aptDate,
+                    aptStatus:'REQUESTED',    // Appointment status: REQUESTED | SCHEDULED | EXPIRED
+                    patientid: Cookies.get('userid'),
+                    doctorid: '1001'
+                }
+                //console.log(extraFields)
+
+            PostAppointment(extraFields).then(response => {
               
               if(response.done){ 
                 //router.push(`/`)
-                const noerrorDiv = document.getElementById('noerrorDiv');
+                /*const noerrorDiv = document.getElementById('noerrorDiv');
                 noerrorDiv.innerText = `Congrats! ${response.username} Profile Created Successfully`
                 noerrorDiv.style.visibility='visible'
                 setTimeout(()=>hideError('noerrorDiv'), 2000) 
-                
+                */
+               console.log('Posted Appointment Successfully!')
+               
+               setUseEffectTrigger ([true])
+               console.log ('SHOW YAAAAR' + useEffectTrigger)
+                 
+
+                // we may useEffet based on variable change 
+                // indicated here and in the return body below 
+                // unhide hidden success message
+               
                 
               } 
               else {
+                /*
                 const errorDiv = document.getElementById('errorDiv');
                 errorDiv.innerText = `${response.dberror}`
                 errorDiv.style.visibility='visible'
                 console.log(`Lugger Message: ${response.dberror}`)
                 setTimeout(()=>hideError('errorDiv'), 3000)  
+                */
+                console.log('Could not Post Appointment!')
         
               } })
             
           }
       
         })
-        function hideError(errorDivId){
-          const errorDiv = document.getElementById(errorDivId);
-          errorDiv.style.visibility='hidden'
-          if (errorDiv.id=='noerrorDiv') router.push('/')
-        }
-  
+        
       return (
           <>
           <div className="flex items-center justify-center text-[22px] mt-3 flex-col">
@@ -167,7 +243,7 @@ export default function MakeAppointmentComponent() {
                                   id="slctSymptoms" 
                                   name="slctSymptoms" 
                                   value={formik.values.slctSymptoms} 
-                                  onChange={(e) => {formik.setFieldValue('slctSymptoms', e.value)}} 
+                                  onChange={formik.handleChange} //onChange={(e) => {formik.setFieldValue('slctSymptoms', e.value)}} 
                                   options={symptoms} 
                                   optionLabel="name" 
                                   display="chip" 
@@ -177,7 +253,7 @@ export default function MakeAppointmentComponent() {
                                 />
                             </div>
                           </div>  
-
+                          <button className="px-2 bg-red-500 text-white py-1" onClick={()=>tempCheck()}>Click Me</button>
                       </div>
                         {/* ------------------------------------*/}
                 
@@ -203,7 +279,7 @@ export default function MakeAppointmentComponent() {
                         options={doctors}
                         optionLabel="name"
                         placeholder="Select a Doctor"
-                        onChange={(e) => {formik.setFieldValue('slctDoctor', e.value)}}
+                        onChange={formik.handleChange}  //onChange={(e) => {formik.setFieldValue('slctDoctor', e.value)}}
                         className='w-full'
                       />
                       <label htmlFor="slctDoctor">Select a Doctor</label>
@@ -226,6 +302,7 @@ export default function MakeAppointmentComponent() {
                         value={formik.values.date}
                         onChange={formik.handleChange}
                         className="w-full"
+                        dateFormat="dd/mm/yy"
                         touchUI 
                         showButtonBar 
                     />
@@ -236,10 +313,6 @@ export default function MakeAppointmentComponent() {
                 {/* ------------------------------------*/}
 
                 {/*=========================================================*/}
-
-
-
-
 
 
                      
@@ -255,7 +328,9 @@ export default function MakeAppointmentComponent() {
                       
                       </form>
                       <div id='errorDiv' name='errorDiv' className='bg-red-800 text-red-100 p-2 px-4 mt-1 rounded-full invisible'></div>
-                      <div id='noerrorDiv' name='noerrorDiv' className='bg-green-800 text-red-100 px-4 mt-1 p-2 rounded-full invisible'></div>
+                      <div id='successDiv' name='successDiv' className='bg-green-800 text-red-100 px-4 mt-1 p-2 rounded-full invisible'>
+                          Appointment Requested Successfully! Check Appointment Status in 'My Appointments' section for details.
+                      </div>
                   </div>
                   </div>
               </div>

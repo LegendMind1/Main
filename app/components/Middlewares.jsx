@@ -113,7 +113,7 @@ export async function RegisterUser(userInfo) {
       };
       //const postNow = JSON.stringify({data: postData})
       try{
-          let response = await fetch('http://192.168.18.165:1337/api/auth/local/register', {
+          let response = await fetch('http://127.0.0.1:1337/api/auth/local/register', {
             method: 'POST',
             headers: {
               //'Accept': 'application/json',
@@ -123,19 +123,6 @@ export async function RegisterUser(userInfo) {
             body: JSON.stringify(postData),
             
           });
-
-          if (!response.ok) {
-            response = await fetch('http://127.0.0.1:1337/api/auth/local/register', {
-            method: 'POST',
-            headers: {
-              //'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              //'Authorization': `Bearer ${tokenRegister}`
-            },
-            body: JSON.stringify(postData),
-            
-          });
-        }
         
 
           //console.log (JSON.stringify(postData))
@@ -292,6 +279,49 @@ export async function PostDoctors(values){
         console.log('Data posted successfully!');
         console.log (postedData);
         return Promise.resolve({done: true, username: postedData.data.attributes.doctor_name})
+      } else {
+        console.log('Failed to post data.');
+        console.log (postedData);
+        return Promise.resolve({done: false})
+
+      }
+    } // Try Block End 
+    catch (error) {
+      console.log('Error:', error);
+    }
+
+}
+
+
+
+export async function PostAppointment(values){
+  const postData = {
+    
+        desc: values.txtDesc,
+        docname: values.docName,      // Inserted new field (duplicated doctor name)
+        symptoms: values.strSymptoms,
+        aptdate: values.aptDate,
+        aptstatus: values.aptStatus,
+        patientid: values.patientid,
+        doctorid: values.doctorid,
+
+  };
+  //const postNow = JSON.stringify({data: postData})
+  try{
+      const response = await fetch('http://127.0.0.1:1337/api/appointments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          //'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({data: postData}),
+        //body: postNow,
+      });
+      const postedData = await response.json();
+      if (response.ok) {
+        console.log('Data posted successfully!');
+        console.log (postedData);
+        return Promise.resolve({done: true, aptDateRquested: postedData.data.attributes.aptdate})
       } else {
         console.log('Failed to post data.');
         console.log (postedData);

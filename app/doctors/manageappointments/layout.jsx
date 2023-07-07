@@ -1,5 +1,7 @@
-export default function ManagaeAppointmentsLayout({childern}) {
+export default function ManagaeAppointmentLayout({children}) {
   return (
-    {childern}
+    <>
+    {children}
+    </>
   )
 }

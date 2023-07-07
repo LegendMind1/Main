@@ -1,10 +1,11 @@
 'use client'
+import ManageAppointmentComponent from '@/app/components/ManageAppointmentComponent'
 import Cookies from 'js-cookie'
 
 export default function ManagaeAppointments() {
   return (
     <>
-      Appointment Page for Doctors
+      <ManageAppointmentComponent />
     </>
   )
 }
