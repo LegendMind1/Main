@@ -303,7 +303,8 @@ export async function PostAppointment(values){
         aptdate: values.aptDate,
         aptstatus: values.aptStatus,
         patientid: values.patientid,
-        doctorid: values.doctorid,
+        patname: values.patname,      // Inserted new field (duplicated patient name)
+        doctorid: values.doctorid,  
 
   };
   //const postNow = JSON.stringify({data: postData})
@@ -334,3 +335,84 @@ export async function PostAppointment(values){
     }
 
 }
+
+
+
+export async function AcceptAppointment(aptID){
+  
+  const postData = {
+    
+    aptstatus: 'BOOKED',
+    
+};
+
+  //const postNow = JSON.stringify({data: postData})
+  try{
+      const response = await fetch(`http://127.0.0.1:1337/api/appointments/${aptID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          //'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({data: postData}),
+        //body: postNow,
+      });
+      const postedData = await response.json();
+      if (response.ok) {
+        console.log('Data posted successfully!');
+        console.log (postedData);
+        return Promise.resolve({done: true, aptDateRquested: postedData.data.attributes.aptdate})
+      } else {
+        console.log('Failed to post data.');
+        console.log (postedData);
+        return Promise.resolve({done: false})
+
+      }
+    } // Try Block End 
+    catch (error) {
+      console.log('Error:', error);
+    }
+
+}
+
+
+export async function RejectAppointment(aptID){
+  
+  const postData = {
+    
+    aptstatus: 'REGRETTED',
+    
+};
+
+  //const postNow = JSON.stringify({data: postData})
+  try{
+      const response = await fetch(`http://127.0.0.1:1337/api/appointments/${aptID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          //'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({data: postData}),
+        //body: postNow,
+      });
+      const postedData = await response.json();
+      if (response.ok) {
+        console.log('Data posted successfully!');
+        console.log (postedData);
+        return Promise.resolve({done: true, aptDateRquested: postedData.data.attributes.aptdate})
+      } else {
+        console.log('Failed to post data.');
+        console.log (postedData);
+        return Promise.resolve({done: false})
+
+      }
+    } // Try Block End 
+    catch (error) {
+      console.log('Error:', error);
+    }
+
+}
+
+
+
+

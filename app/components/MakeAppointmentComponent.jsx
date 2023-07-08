@@ -81,11 +81,25 @@ export default function MakeAppointmentComponent() {
 
     const [selectedSymptoms, setSelectedSymptoms] = useState(null);
     const symptoms = [
-        { name: 'Fever', code: 'Fever' },
-        { name: 'Headache', code: 'Headache' },
-        { name: 'Cold', code: 'Cold' },
-        { name: 'Heart Pepation', code: 'Heart Peptation' },
-    ];
+      { name: 'Fever', code: 'Fever' },
+      { name: 'Headache', code: 'Headache' },
+      { name: 'Cold', code: 'Cold' },
+      { name: 'Heart Pepation', code: 'Heart Peptation' },
+      { name: 'Coughing', code: 'Coughing' },
+      { name: 'Fatigue', code: 'Fatigue' },
+      { name: 'Back Pain', code: 'Back Pain' },
+      { name: 'Hallucination', code: 'Hallucination' },
+      { name: 'Stomachache', code: 'Stomachache' },
+      { name: 'Dizziness', code: 'Dizziness' },
+      { name: 'Weakness in Muscles', code: 'Weakness in Muscles' },
+      { name: 'Blurred vision', code: 'Blurred vision' },
+      { name: 'Tooth Ache', code: 'Tooth Ache' },
+      { name: 'Chest pain', code: 'Chest pain' },
+      { name: 'Nausea', code: 'Nausea' },
+      { name: 'Cramps', code: 'Cramps' },
+      { name: 'Diarrhoea', code: 'Diarrhoea' },
+      { name: 'Vomiting',  code: 'Vomiting' }
+  ];
 
 
     //-----------------------------------------------
@@ -156,7 +170,8 @@ export default function MakeAppointmentComponent() {
             ////////////////////////////////////////////////////////////////////
             aptStatus:'',
             patientid: '',
-            doctorid: ''
+            doctorid: '',
+            patname:'',
             
           },
 
@@ -179,7 +194,8 @@ export default function MakeAppointmentComponent() {
                     aptDate: aptDate,
                     aptStatus:'REQUESTED',    // Appointment status: REQUESTED | SCHEDULED | EXPIRED
                     patientid: Cookies.get('userid'),
-                    doctorid: docList.docID
+                    patname: Cookies.get('username'),
+                    doctorid: docList.docID,
                 }
                 //console.log(extraFields)
 
