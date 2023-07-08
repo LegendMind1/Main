@@ -71,13 +71,13 @@ export default function MyAppointments() {
                       oddrow == 0 ? oddrowStyle = 'bg-gray-200' : oddrowStyle = 'bg-green-400'
           return (
                    
-                  <tr className={`items-center bg-opacity-50 ${oddrowStyle} hover:bg-red-400 h-10 hover:shadow-lg hover:shadow-red-800`}>
+                  <tr className={`items-center bg-opacity-50 ${oddrowStyle} hover:bg-red-400 h-10 hover:shadow-xl hover:shadow-red-800`}>
                     <td className='px-2 text-sm font-bold text-left border-r-2 border-red-600 w-[40px]'>{index+11}</td>
                     <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.symptoms}</td>
                     <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.desc}</td>
                     <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.docname}</td>
                     <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.aptdate}</td>
-                    <td className='px-2 text-sm text-red-900 text-center w-[80px]'><span className='bg-yellow-500 rounded-full p-1'>{d.attributes.aptstatus}</span></td>
+                    <td className='px-2 text-sm text-red-900 text-center w-[80px]'><span className='bg-yellow-500 rounded-full p-1 shadow-lg shadow-slate-800 hover:mr-1'>{d.attributes.aptstatus}</span></td>
                   </tr>
                   )
                 })}
