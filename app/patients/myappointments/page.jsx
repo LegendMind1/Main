@@ -53,7 +53,7 @@ export default function MyAppointments() {
     <div className='w-full flex mb-6 cursor-default'>
         <div className='flex justify-center'>
 
-              <table className='table-fixed w-[90%] mb-36'>
+              <table className='table-fixed w-[90%] mb-36 shadow-2xl shadow-slate-800'>
                 <thead className='bg-red-900 text-white text-[14px]'>
                   <tr className='items-center h-12'>
                     <th className='w-[40px] px-2 text-sm text-left'>Sr.#</th>
@@ -68,11 +68,11 @@ export default function MyAppointments() {
                 {data.data.map((d,index) => { 
                   let oddrow = index % 2;
                   let oddrowStyle = ''
-                      oddrow == 0 ? oddrowStyle = 'bg-gray-100' : oddrowStyle = 'bg-green-200'
+                      oddrow == 0 ? oddrowStyle = 'bg-gray-200' : oddrowStyle = 'bg-green-400'
           return (
                    
-                  <tr className={`items-center ${oddrowStyle} hover:bg-red-400 h-10`}>
-                    <td className='px-2 text-sm text-left border-r-2 border-red-600 w-[40px]'>{index+11}</td>
+                  <tr className={`items-center bg-opacity-50 ${oddrowStyle} hover:bg-red-400 h-10 hover:shadow-lg hover:shadow-red-800`}>
+                    <td className='px-2 text-sm font-bold text-left border-r-2 border-red-600 w-[40px]'>{index+11}</td>
                     <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.symptoms}</td>
                     <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.desc}</td>
                     <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.docname}</td>
