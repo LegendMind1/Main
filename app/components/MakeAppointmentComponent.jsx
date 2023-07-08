@@ -24,32 +24,18 @@ import { Dropdown } from 'primereact/dropdown';
 export default function MakeAppointmentComponent() {
     const router = useRouter();
 
+    //========== Used to Display Success Message Triggering after PostAppointment =========
     const [useEffectTrigger, setUseEffectTrigger] = useState([false]);
 
     useEffect (()=>{
       (useEffectTrigger[0] == true) ? document.getElementById('successDiv').style.visibility='visible' :  document.getElementById('successDiv').style.visibility='hidden'
     },[useEffectTrigger])
+    //========================================================================
 
-    function tempCheck(){
 
-            let docName = handleDoctorList()
-            let strSymptoms = handleSymptoms ()
-            let aptDate = handleCalendar()  
 
-            let extraFields = {
-                    txtDesc: formik.values.txtDesc,
-                    docName: docName,
-                    strSymptoms: strSymptoms,
-                    aptDate: aptDate,
-                    aptStatus:'REQUESTED',    // Appointment status: REQUESTED | SCHEDULED | EXPIRED
-                    patientid: Cookies.get('userid'),
-                    doctorid: '1001'
-                }
 
-                console.log (extraFields)
-            
-    }
-
+    //================= Custom Functions to prepare input ========================
       function handleCalendar () {
         let dt;
         dt = (String(formik.values.date) != 'undefined') ? String(formik.values.date) : ''
@@ -84,9 +70,10 @@ export default function MakeAppointmentComponent() {
           }
           return docName
         }
-    
+    //=====================================================================
 
-    //========= Multiselect Symptoms Const======
+    //================== Preparing Inputs =================================
+    //------------- Multiselect Symptoms Const -----------
 
     const [selectedSymptoms, setSelectedSymptoms] = useState(null);
     const symptoms = [
@@ -97,12 +84,14 @@ export default function MakeAppointmentComponent() {
     ];
 
 
-    //=================================
+    //-----------------------------------------------
 
 
-    //=========== Doctor List Const===========
+    //----------------- Doctor List Const ----------------
 
     const [selectedDoctor, setSelectedDoctor] = useState(null);
+    
+
     const doctors = [
         { name: 'Dr. Azam', doctorid: '12' },
         { name: 'Dr. Ahmer', doctorid: '33' },
@@ -111,7 +100,7 @@ export default function MakeAppointmentComponent() {
         { name: 'Paris', doctorid: '10' }
     ];
 
-    //========================================
+     //-----------------------------------------------
 
 
       const formik = useFormik({
@@ -155,32 +144,16 @@ export default function MakeAppointmentComponent() {
             PostAppointment(extraFields).then(response => {
               
               if(response.done){ 
-                //router.push(`/`)
-                /*const noerrorDiv = document.getElementById('noerrorDiv');
-                noerrorDiv.innerText = `Congrats! ${response.username} Profile Created Successfully`
-                noerrorDiv.style.visibility='visible'
-                setTimeout(()=>hideError('noerrorDiv'), 2000) 
-                */
+                
                console.log('Posted Appointment Successfully!')
                
                setUseEffectTrigger ([true])
-               console.log ('SHOW YAAAAR' + useEffectTrigger)
-                 
-
-                // we may useEffet based on variable change 
+                // Using useEffet based on variable change 
                 // indicated here and in the return body below 
                 // unhide hidden success message
-               
-                
               } 
               else {
-                /*
-                const errorDiv = document.getElementById('errorDiv');
-                errorDiv.innerText = `${response.dberror}`
-                errorDiv.style.visibility='visible'
-                console.log(`Lugger Message: ${response.dberror}`)
-                setTimeout(()=>hideError('errorDiv'), 3000)  
-                */
+                // We may show Error Message using useEffect as above here
                 console.log('Could not Post Appointment!')
         
               } })
@@ -253,7 +226,7 @@ export default function MakeAppointmentComponent() {
                                 />
                             </div>
                           </div>  
-                          <button className="px-2 bg-red-500 text-white py-1" onClick={()=>tempCheck()}>Click Me</button>
+                          
                       </div>
                         {/* ------------------------------------*/}
                 

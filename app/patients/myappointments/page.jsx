@@ -53,24 +53,31 @@ export default function MyAppointments() {
     <div className='w-full flex mb-6 cursor-default'>
         <div className='flex justify-center'>
 
-              <table className='table-fixed w-[90%] border-2 border-red-400 text-justify mb-36'>
-                <thead className='bg-black text-white text-xl'>
+              <table className='table-fixed w-[90%] mb-36'>
+                <thead className='bg-red-900 text-white text-[14px]'>
                   <tr className='items-center h-12'>
-                    <th>Symptoms</th>
-                    <th>Description</th>
-                    <th>Doctor</th>
-                    <th>Appointment Date</th>
+                    <th className='w-[40px] px-2 text-sm text-left'>Sr.#</th>
+                    <th className='px-2 text-sm text-left'>Symptoms</th>
+                    <th className='px-2 text-sm text-left'>Description</th>
+                    <th className='px-2 text-sm text-left'>Doctor</th>
+                    <th className='px-2 text-sm text-left'>Appointment Date</th>
+                    <th className='px-2 text-sm text-left w-[110px]'>Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                {data.data.map((d) => {
+                {data.data.map((d,index) => { 
+                  let oddrow = index % 2;
+                  let oddrowStyle = ''
+                      oddrow == 0 ? oddrowStyle = 'bg-gray-100' : oddrowStyle = 'bg-green-200'
           return (
-        
-                  <tr className='items-center hover:bg-red-400 h-10'>
-                    <td>{d.attributes.symptoms}</td>
-                    <td>{d.attributes.desc}</td>
-                    <td>{d.attributes.docname}</td>
-                    <td>{d.attributes.aptdate}</td>
+                   
+                  <tr className={`items-center ${oddrowStyle} hover:bg-red-400 h-10`}>
+                    <td className='px-2 text-sm text-left border-r-2 border-red-600 w-[40px]'>{index+11}</td>
+                    <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.symptoms}</td>
+                    <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.desc}</td>
+                    <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.docname}</td>
+                    <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.aptdate}</td>
+                    <td className='px-2 text-sm text-red-900 text-center w-[80px]'><span className='bg-yellow-500 rounded-full p-1'>{d.attributes.aptstatus}</span></td>
                   </tr>
                   )
                 })}
