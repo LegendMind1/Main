@@ -20,13 +20,14 @@ import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { MultiSelect } from 'primereact/multiselect';
 import { Dropdown } from 'primereact/dropdown';
+import useSWR from 'swr'
 
 export default function MakeAppointmentComponent() {
     const router = useRouter();
 
     //========== Used to Display Success Message Triggering after PostAppointment =========
     const [useEffectTrigger, setUseEffectTrigger] = useState([false]);
-
+    
     useEffect (()=>{
       (useEffectTrigger[0] == true) ? document.getElementById('successDiv').style.visibility='visible' :  document.getElementById('successDiv').style.visibility='hidden'
     },[useEffectTrigger])
@@ -62,13 +63,16 @@ export default function MakeAppointmentComponent() {
 
       function handleDoctorList(){
         let docName = ''
+        let docID = ''
           try{
             docName = formik.values.slctDoctor.name
+            docID = formik.values.slctDoctor.doctorid
           }
           catch{ 
-            docName = ''          
+            docName = ''
+            docID = ''          
           }
-          return docName
+          return ({docName, docID})
         }
     //=====================================================================
 
@@ -90,16 +94,55 @@ export default function MakeAppointmentComponent() {
     //----------------- Doctor List Const ----------------
 
     const [selectedDoctor, setSelectedDoctor] = useState(null);
-    
 
-    const doctors = [
+
+    //-------------------Get Doctors API---------------------------------------
+          let doctors; // Variable to hold object array for MultiSelect Doctors field
+
+          const url =  'http://127.0.0.1:1337/api/doctors?fields[0]=doctor_name&fields[1]=userid'
+        
+          const fetcher = (...args) => fetch(...args).then(res => res.json())
+          const {data, error, isLoading} = useSWR(`${url}`,fetcher)
+          
+          let errorFlag = false
+
+          if (!isLoading) {
+                try{
+                  // let dummy = 'DocName: ' + data.data[1].attributes.doctor_name + ' DocID: ' + data.data[0].attributes.userid
+                  // console.log(dummy)
+
+                  doctors = Array.from({length:data.data.length}, _ => ({}));
+                  for (let i = 0; i < doctors.length; i += 1) {
+                    doctors[i].name = data.data[i].attributes.doctor_name
+                    doctors[i].doctorid = data.data[i].attributes.userid;
+                  }
+                  //console.log(doctors);
+
+                }
+              
+                //============== Manage Error ==================
+                
+                catch(err) {
+                  console.error(err.message);
+                  errorFlag=true
+                    throw new Error ('Something went to the moon', { cause: err }) // Custom Error
+                    //throw err;
+                }
+                finally {
+                  if (errorFlag) {<div id='successDiv' className='text-lg text-red-700'>Something went to the moon</div>}
+                }
+            }
+    //--------------------------------------------------------------------
+
+    /* 
+    const doctors1 = [
         { name: 'Dr. Azam', doctorid: '12' },
         { name: 'Dr. Ahmer', doctorid: '33' },
         { name: 'Dr. Baqir', doctorid: '45' },
         { name: 'Dr. Niaz Bashir', doctorid: '11' },
         { name: 'Paris', doctorid: '10' }
     ];
-
+    */
      //-----------------------------------------------
 
 
@@ -126,18 +169,17 @@ export default function MakeAppointmentComponent() {
       
           onSubmit: (values) => {
             //console.log('wwww')
-            let docName = handleDoctorList()
+            let docList = handleDoctorList()
             let strSymptoms = handleSymptoms ()
             let aptDate = handleCalendar()  
-
             let extraFields = {
                     txtDesc: values.txtDesc,
-                    docName: docName,
+                    docName: docList.docName,
                     strSymptoms: strSymptoms,
                     aptDate: aptDate,
                     aptStatus:'REQUESTED',    // Appointment status: REQUESTED | SCHEDULED | EXPIRED
                     patientid: Cookies.get('userid'),
-                    doctorid: '1001'
+                    doctorid: docList.docID
                 }
                 //console.log(extraFields)
 
