@@ -14,6 +14,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+      {/* <Script 
+        src='scripts/ss.js'
+        strategy="afterInteractive"
+      /> */}
       <main className={poppins.className}>
        {/* <div className='bg-gradient-to-t from-[#59ab7a] to-[#000000] h-screen'> */}
        <div className='bg-[url("/images/bg2.jpg")] bg-fixed bg-cover'>

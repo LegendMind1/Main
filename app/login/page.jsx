@@ -194,11 +194,16 @@ export default function Login () {
                       <div id='errorDiv' name='errorDiv' className='bg-red-800 text-red-100 p-2 px-4 mt-2 rounded-full invisible'></div>
                       <div id='noerrorDiv' name='noerrorDiv' className='bg-green-800 text-red-100 px-4 mt-2 p-2 rounded-full invisible'></div>
                       
-                      <div> 
+                      <div className='flex justify-between'> 
                         <Link href='/'>
                           <span className='text-green-600'>{'\'<-'}</span>
                           <span className='pr-4 text-green-600 underline'>
                             Home
+                          </span>
+                        </Link>
+                        <Link href='/loginface'>
+                          <span className='pr-4 text-green-600 bg-red-700 text-white p-1 px-2 rounded-full text-sm shadow-md shadow-gray-900 hover:shadow-sm hover:shadow-gray-900'>
+                            Or Login Using Face ID
                           </span>
                         </Link>
                       </div>         
