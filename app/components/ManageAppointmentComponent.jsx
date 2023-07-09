@@ -13,6 +13,10 @@ export default function MyAppointments() {
   */
   let router = useRouter();
 
+function LoadAppointmentDetails(aptID){
+  router.push(`/doctors/appointmentdetails?aptid=${aptID}`)
+}
+
   function AcceptApt(aptID){
     //alert (aptObj.attributes.patname + ' has ID: ' + aptID)
     AcceptAppointment(aptID).then(response => {
@@ -78,11 +82,11 @@ export default function MyAppointments() {
   catch(err) {
     console.error(err.message);
     errorFlag=true
-    throw new Error ('Something went to the moon') // Custom Error
+    //throw new Error ('Something went to the moon') // Custom Error
     //throw err;
   }
   finally {
-    if (errorFlag) {return <div>Something went to the moon</div>}
+    if (errorFlag) {return <div className='h-1/2 justify-center items-center flex'><div className='flex bg-red-800 text-yellow-400 rounded-full p-4'>You have no appointments yet</div></div>}
 }
 
   return (
@@ -126,7 +130,7 @@ export default function MyAppointments() {
                       oddrow == 0 ? oddrowStyle = 'bg-gray-200' : oddrowStyle = 'bg-green-400'
           return (
                    
-                  <tr className={`items-center bg-opacity-50 ${oddrowStyle} hover:bg-red-400 h-10 hover:shadow-xl hover:shadow-red-800`}>
+                  <tr onClick={()=>LoadAppointmentDetails(d.id)} className={`items-center bg-opacity-50 ${oddrowStyle} hover:bg-red-400 h-10 hover:shadow-xl hover:shadow-red-800 hover:cursor-pointer`}>
                     <td className='px-2 text-sm font-bold text-left border-r-2 border-red-600 w-[40px]'>{index+1}</td>
                     <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.patname}</td>
                     <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.symptoms}</td>

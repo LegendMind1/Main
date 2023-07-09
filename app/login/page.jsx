@@ -12,6 +12,7 @@ import { SetToken } from '../components/Auth';
 
 export default function Login () {
   const router = useRouter()
+  
   /*-------------------- Formik and Yup --------------------*/
   /*
   const [loading, setLoading] = useState(false);
@@ -97,7 +98,7 @@ export default function Login () {
           const errorDiv = document.getElementById('errorDiv');
           errorDiv.style.visibility='visible'
           errorDiv.innerText = `${response.dberror}`
-          console.log(`Lugger Message: ${response.dberror}`)
+          console.log(`Logger Message: ${response.dberror}`)
           //setTimeout(()=>hideError('errorDiv'), 5000)  
   
         } 

@@ -99,15 +99,15 @@ const Register = () => {
           const noerrorDiv = document.getElementById('noerrorDiv');
           noerrorDiv.style.visibility='visible'
           noerrorDiv.innerText = `Congrats! ${response.username} registered successfully as ${response.usertype}`
-          setTimeout(()=>hideError('noerrorDiv'), 5000) 
+          //setTimeout(()=>hideError('noerrorDiv'), 5000) 
           router.push(`/`)  
         } 
         else {
           const errorDiv = document.getElementById('errorDiv');
           errorDiv.style.visibility='visible'
           errorDiv.innerText = `${response.dberror}`
-          console.log(`Lugger Message: ${response.dberror}`)
-          setTimeout(()=>hideError('errorDiv'), 5000)  
+          console.log(`Logger Message: ${response.dberror}`)
+          //setTimeout(()=>hideError('errorDiv'), 5000)  
   
         } 
 

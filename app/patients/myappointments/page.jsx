@@ -1,7 +1,7 @@
 'use client'
 import Cookies from 'js-cookie'
 import useSWR from 'swr'
-
+import {useRouter} from 'next/navigation'
                             
 export default function MyAppointments() {
   //<Button onClick={()=>alert('what')} icon='pi pi-user'>Click Me</Button>
@@ -10,6 +10,11 @@ export default function MyAppointments() {
     formik.setFieldValue('txtDesc', e.target.value);
   }}
   */
+  let router = useRouter();
+
+  function LoadAppointmentDetails(aptID){
+    router.push(`/patients/appointmentdetails?aptid=${aptID}`)
+  }
 
   const url =  `http://127.0.0.1:1337/api/appointments?[filters][patientid][$eq]=${Cookies.get('userid')}`
   
@@ -71,7 +76,7 @@ export default function MyAppointments() {
                       oddrow == 0 ? oddrowStyle = 'bg-gray-200' : oddrowStyle = 'bg-green-400'
           return (
                    
-                  <tr className={`items-center bg-opacity-50 ${oddrowStyle} hover:bg-red-400 h-10 hover:shadow-xl hover:shadow-red-800`}>
+                  <tr onClick={()=>LoadAppointmentDetails(d.id)} className={`hover:cursor-pointer items-center bg-opacity-50 ${oddrowStyle} hover:bg-red-400 h-10 hover:shadow-xl hover:shadow-red-800`}>
                     <td className='px-2 text-sm font-bold text-left border-r-2 border-red-600 w-[40px]'>{index+11}</td>
                     <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.symptoms}</td>
                     <td className='px-2 text-sm text-left border-r-2 border-red-600'>{d.attributes.desc}</td>

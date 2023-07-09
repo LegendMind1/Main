@@ -109,7 +109,7 @@ export default function MakeAppointmentComponent() {
 
     const [selectedDoctor, setSelectedDoctor] = useState(null);
 
-
+    
     //-------------------Get Doctors API---------------------------------------
           let doctors; // Variable to hold object array for MultiSelect Doctors field
 

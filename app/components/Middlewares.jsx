@@ -416,3 +416,44 @@ export async function RejectAppointment(aptID){
 
 
 
+export async function UpdateAppointmentDetails(aptID, values){
+  
+  const postData = {
+    
+    symptoms: values.txtSymptoms,
+    aptstatus: 'Attended',
+    desc: values.txtDesc,
+    diagnosis: values.txtDiag,
+    commentsbydoc: values.txtDocComments,
+    presc: values.txtPresc,
+
+};
+
+  //const postNow = JSON.stringify({data: postData})
+  try{
+      const response = await fetch(`http://127.0.0.1:1337/api/appointments/${aptID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          //'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({data: postData}),
+        //body: postNow,
+      });
+      const postedData = await response.json();
+      if (response.ok) {
+        console.log('Appointment Details posted successfully!');
+        console.log (postedData);
+        return Promise.resolve({done: true})
+      } else {
+        console.log('Failed to update Appointment details.');
+        console.log (postedData);
+        return Promise.resolve({done: false})
+
+      }
+    } // Try Block End 
+    catch (error) {
+      console.log('Error:', error);
+    }
+
+}

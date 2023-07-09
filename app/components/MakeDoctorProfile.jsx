@@ -1,6 +1,5 @@
 'use client'
 import Cookies from "js-cookie"
-import PatientCard from "./PatientCard"
 import Image from "next/image"
 import { PostDoctors } from './Middlewares';
 import { useFormik } from "formik";
